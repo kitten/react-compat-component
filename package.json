@@ -1,0 +1,42 @@
+{
+  "name": "react-compat-component",
+  "version": "1.0.0",
+  "description": "Compatibility class for React's ES6 component class",
+  "main": "dist.js",
+  "engines": {
+    "node": ">= 0.10.x"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/philplckthun/react-compat-component"
+  },
+  "bugs": {
+    "url": "https://github.com/philplckthun/react-compat-component/issues"
+  },
+  "peerDependencies": {
+    "react": "^0.13.0-beta.1"
+  },
+  "scripts": {
+    "prepublish": "./node_modules/.bin/babel ./src -o ./dist.js",
+    "build": "./node_modules/.bin/babel ./src -o ./dist.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Phil Plückthun <phil@plckthn.me>",
+  "license": "MIT",
+  "keywords": [
+    "react",
+    "compat",
+    "component",
+    "compatibility",
+    "es6",
+    "class",
+    "mixin",
+    "mixins"
+  ],
+  "devDependencies": {
+    "babel": "^5.0.12"
+  },
+  "dependencies": {
+    "object-assign": "^2.0.0"
+  }
+}
