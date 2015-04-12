@@ -32,12 +32,54 @@ import React from "react";
 import { CompatComponent } from "react-compat-component";
 
 export class HelloMessage extends CompatComponent {
-  constructor(props) {
-    this.mixins = [
+  getMixins() {
+    return [
       SetIntervalMixin
     ];
-    super(props);
+  }
 
+  getDefaultProps() {
+    return {
+      example: 0
+    }
+  }
+
+  constructor(props) {
+    super(props);
+    // ...
+  }
+
+  getInitialState: function() {
+    return {
+      seconds: 0
+    };
+  }
+
+  render() {
+    // ...
+  }
+}
+```
+
+**In the future**, something like this might be possible:
+
+```javascript
+import React from "react";
+import { CompatComponent } from "react-compat-component";
+
+export class HelloMessage extends CompatComponent {
+  const mixins = [
+    SetIntervalMixin
+  ];
+  defaultProps = {
+    example: 0
+  };
+  propTypes = {
+    // ...
+  };
+
+  constructor(props) {
+    super(props);
     // ...
   }
 
@@ -55,13 +97,25 @@ export class HelloMessage extends CompatComponent {
 
 ## Differences from createClass
 
-Originally React ditched three major features for ES6 classes:
+Originally React ditched two major features for ES6 classes:
 
   - Autobinding
   - Mixins
   - getInitialState()
 
+Also it deletes the following methods:
+
+  - getInitialState()
+  - getDefaultProps()
+
 `react-compat-component` restores all three features.
+
+Its "meta-constructor" modifies the component during instantiation.
+(Note that this might affect performance)
+
+Also as a workaround it has to introduce the `getMixins` and the
+`getPropTypes` method as in classes there isn't variable instantiation
+available as of now.
 
 ## Difference to react-mixin
 
