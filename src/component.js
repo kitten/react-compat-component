@@ -53,6 +53,17 @@ export class CompatComponent extends React.Component {
       }
     }
 
+    if (!this.defaultProps) {
+      this.defaultProps = {};
+    }
+
+    if (typeof this.getDefaultProps === "function") {
+      const _getDefaultProps = this._getDefaultProps();
+      for (var key in _getDefaultProps) {
+        this.defaultProps[key] = _getDefaultProps[key];
+      }
+    }
+
     this._mixinImports = {};
     this._prePropsMixinFunctions();
 

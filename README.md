@@ -38,6 +38,12 @@ export class HelloMessage extends CompatComponent {
     ];
   }
 
+  getPropTypes() {
+    return {
+      example: React.PropTypes.number
+    };
+  }
+
   getDefaultProps() {
     return {
       example: 0
@@ -75,7 +81,7 @@ export class HelloMessage extends CompatComponent {
     example: 0
   };
   propTypes = {
-    // ...
+    example: React.PropTypes.number
   };
 
   constructor(props) {
