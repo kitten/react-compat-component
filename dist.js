@@ -175,7 +175,7 @@ var CompatComponent = (function (_React$Component) {
             } else {
               // Check whether methods here can be imported, as they're supposed
               // to only be defined once
-              _invariant2["default"](!!_this2[property], "You are attempting to redefine '$(property)' on your component. " + "This conflict may be due to a mixin.");
+              _invariant2["default"](_this2.hasOwnProperty(property), "You are attempting to redefine '${property}' on your component. " + "This conflict may be due to a mixin.");
               _this2[property] = mixin[property];
             }
           }
