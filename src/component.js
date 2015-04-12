@@ -41,6 +41,18 @@ export class CompatComponent extends React.Component {
       }
     }
 
+    if (!this.propTypes) {
+      this.propTypes = {};
+    }
+
+    // Importing propTypes from the getPropTypes method
+    if (typeof this.getPropTypes === "function") {
+      const _getPropTypes = this._getPropTypes();
+      for (var key in _getPropTypes) {
+        this.propTypes[key] = _getPropTypes[key];
+      }
+    }
+
     this._mixinImports = {};
     this._prePropsMixinFunctions();
 
