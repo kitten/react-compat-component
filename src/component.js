@@ -64,6 +64,10 @@ export class CompatComponent extends React.Component {
       }
     }
 
+    this.getDOMNode = () => {
+      return React.findDOMNode(this);
+    };
+
     this._mixinImports = {};
     this._prePropsMixinFunctions();
 
