@@ -23,8 +23,8 @@ const multiFunctions = keyMirror({
 });
 
 export class CompatComponent extends React.Component {
-  constructor(props) {
-    super(props);
+  constructor(...arrs) {
+    super(...arrs);
 
     // Make sure the mixins array is assigned
     if (!this.mixins) {
