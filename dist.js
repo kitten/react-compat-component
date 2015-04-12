@@ -75,7 +75,7 @@ var CompatComponent = (function (_React$Component) {
         return {};
       }
     });
-    this.state = _assign2["default"].apply(undefined, [state].concat(_toConsumableArray(arr)));
+    this.state = _assign2["default"].apply(undefined, _toConsumableArray(arr).concat([state]));
 
     this._bindFunctions();
   }
@@ -106,11 +106,11 @@ var CompatComponent = (function (_React$Component) {
       this.mixins.reverse().forEach(function (mixin) {
         Object.keys(mixin).forEach(function (property) {
           if (property === "propTypes") {
-            _this2.propTypes = _assign2["default"](_this2.propTypes || {}, mixin.propTypes || {});
+            _this2.propTypes = _assign2["default"](mixin.propTypes || {}, _this2.propTypes || {});
           } else if (property === "getDefaultProps" && typeof mixin.getDefaultProps === "function") {
-            _this2.defaultProps = _assign2["default"](_this2.defaultProps || {}, mixin.getDefaultProps.call(_this2));
+            _this2.defaultProps = _assign2["default"](mixin.getDefaultProps.call(_this2), _this2.defaultProps || {});
           } else if (property === "statics") {
-            _this2.statics = _assign2["default"](_this2.statics || {}, mixin.statics);
+            _this2.statics = _assign2["default"](mixin.statics, _this2.statics || {});
           } else if (property === "getInitialState") {} else if (typeof mixin[property] === "function") {
             if (multiFunctions[property]) {
               if (!_this2._mixinImports.hasOwnProperty(property)) {
