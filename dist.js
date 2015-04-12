@@ -79,7 +79,7 @@ var CompatComponent = (function (_React$Component) {
 
     // Importing propTypes from the getPropTypes method
     if (typeof this.getPropTypes === "function") {
-      var _getPropTypes = this._getPropTypes();
+      var _getPropTypes = this.getPropTypes();
       for (var key in _getPropTypes) {
         this.propTypes[key] = _getPropTypes[key];
       }
@@ -90,7 +90,7 @@ var CompatComponent = (function (_React$Component) {
     }
 
     if (typeof this.getDefaultProps === "function") {
-      var _getDefaultProps = this._getDefaultProps();
+      var _getDefaultProps = this.getDefaultProps();
       for (var key in _getDefaultProps) {
         this.defaultProps[key] = _getDefaultProps[key];
       }
