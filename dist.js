@@ -49,15 +49,53 @@ var multiFunctions = keyMirror({
 });
 
 var CompatComponent = (function (_React$Component) {
-  function CompatComponent(props) {
+  function CompatComponent() {
+    for (var _len = arguments.length, arrs = Array(_len), _key = 0; _key < _len; _key++) {
+      arrs[_key] = arguments[_key];
+    }
+
     _classCallCheck(this, CompatComponent);
 
-    _get(Object.getPrototypeOf(CompatComponent.prototype), "constructor", this).call(this, props);
+    _get(Object.getPrototypeOf(CompatComponent.prototype), "constructor", this).apply(this, arrs);
 
     // Make sure the mixins array is assigned
     if (!this.mixins) {
       this.mixins = [];
     }
+
+    // Importing mixins from the getMixins method
+    if (typeof this.getMixins === "function") {
+      var _getMixins = this.getMixins();
+      if (this.mixins.length > 0) {
+        this.mixins = this.mixins.concat(_getMixins);
+      } else {
+        this.mixins = _getMixins;
+      }
+    }
+
+    if (!this.propTypes) {
+      this.propTypes = {};
+    }
+
+    // Importing propTypes from the getPropTypes method
+    if (typeof this.getPropTypes === "function") {
+      var _getPropTypes = this._getPropTypes();
+      for (var key in _getPropTypes) {
+        this.propTypes[key] = _getPropTypes[key];
+      }
+    }
+
+    if (!this.defaultProps) {
+      this.defaultProps = {};
+    }
+
+    if (typeof this.getDefaultProps === "function") {
+      var _getDefaultProps = this._getDefaultProps();
+      for (var key in _getDefaultProps) {
+        this.defaultProps[key] = _getDefaultProps[key];
+      }
+    }
+
     this._mixinImports = {};
     this._prePropsMixinFunctions();
 
