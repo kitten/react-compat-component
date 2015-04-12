@@ -50,6 +50,8 @@ var multiFunctions = keyMirror({
 
 var CompatComponent = (function (_React$Component) {
   function CompatComponent() {
+    var _this = this;
+
     for (var _len = arguments.length, arrs = Array(_len), _key = 0; _key < _len; _key++) {
       arrs[_key] = arguments[_key];
     }
@@ -96,6 +98,10 @@ var CompatComponent = (function (_React$Component) {
       }
     }
 
+    this.getDOMNode = function () {
+      return _React2["default"].findDOMNode(_this);
+    };
+
     this._mixinImports = {};
     this._prePropsMixinFunctions();
 
@@ -125,12 +131,12 @@ var CompatComponent = (function (_React$Component) {
 
     // Reintroduce autobinding
     value: function _bindFunctions() {
-      var _this = this;
+      var _this2 = this;
 
       var childFunc = Object.getOwnPropertyNames(this.constructor.prototype);
       childFunc.forEach(function (func) {
-        if (typeof _this[func] === "function") {
-          _this[func] = _this[func].bind(_this);
+        if (typeof _this2[func] === "function") {
+          _this2[func] = _this2[func].bind(_this2);
         }
       });
     }
@@ -139,44 +145,44 @@ var CompatComponent = (function (_React$Component) {
 
     // Import the mixins' properties
     value: function _prePropsMixinFunctions() {
-      var _this2 = this;
+      var _this3 = this;
 
       this.mixins.reverse().forEach(function (mixin) {
         Object.keys(mixin).forEach(function (property) {
           if (property === "propTypes") {
-            _this2.propTypes = _assign2["default"](mixin.propTypes || {}, _this2.propTypes || {});
+            _this3.propTypes = _assign2["default"](mixin.propTypes || {}, _this3.propTypes || {});
           } else if (property === "getDefaultProps" && typeof mixin.getDefaultProps === "function") {
-            _this2.defaultProps = _assign2["default"](mixin.getDefaultProps.call(_this2), _this2.defaultProps || {});
+            _this3.defaultProps = _assign2["default"](mixin.getDefaultProps.call(_this3), _this3.defaultProps || {});
           } else if (property === "statics") {
-            _this2.statics = _assign2["default"](mixin.statics, _this2.statics || {});
+            _this3.statics = _assign2["default"](mixin.statics, _this3.statics || {});
           } else if (property === "getInitialState") {} else if (typeof mixin[property] === "function") {
             if (multiFunctions[property]) {
-              if (!_this2._mixinImports.hasOwnProperty(property)) {
-                _this2._mixinImports[property] = [];
+              if (!_this3._mixinImports.hasOwnProperty(property)) {
+                _this3._mixinImports[property] = [];
 
                 // Save the existing method in the parent class to the
                 // "holding" array
-                if (typeof _this2[property] === "function") {
-                  _this2._mixinImports[property].push(_this2[property].bind(_this2));
+                if (typeof _this3[property] === "function") {
+                  _this3._mixinImports[property].push(_this3[property].bind(_this3));
                 }
 
                 // Overwrite the method to call all methods in the "holding" array
-                _this2[property] = function () {
-                  var _this3 = this;
+                _this3[property] = function () {
+                  var _this4 = this;
 
                   this._mixinImports[property].forEach(function (func) {
-                    func.call(_this3);
+                    func.call(_this4);
                   });
                 };
               }
 
               // Push the mixin's method into the "holding" array
-              _this2._mixinImports[property].push(mixin[property].bind(_this2));
+              _this3._mixinImports[property].push(mixin[property].bind(_this3));
             } else {
               // Check whether methods here can be imported, as they're supposed
               // to only be defined once
-              _invariant2["default"](!!_this2[property], "You are attempting to redefine '$(property)' on your component. " + "This conflict may be due to a mixin.");
-              _this2[property] = mixin[property];
+              _invariant2["default"](!!_this3[property], "You are attempting to redefine '$(property)' on your component. " + "This conflict may be due to a mixin.");
+              _this3[property] = mixin[property];
             }
           }
         });
