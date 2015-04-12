@@ -30,6 +30,17 @@ export class CompatComponent extends React.Component {
     if (!this.mixins) {
       this.mixins = [];
     }
+
+    // Importing mixins from the getMixins method
+    if (typeof this.getMixins === "function") {
+      const _getMixins = this.getMixins();
+      if (this.mixins.length > 0) {
+        this.mixins = this.mixins.concat(_getMixins);
+      } else {
+        this.mixins = _getMixins;
+      }
+    }
+
     this._mixinImports = {};
     this._prePropsMixinFunctions();
 
