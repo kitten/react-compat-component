@@ -66,7 +66,7 @@ Originally React ditched three major features for ES6 classes:
 ## Difference to react-mixin
 
 `react-mixin` implements a function to modify *arbitrary objects* to "import"
-mixins. It is an unnecessary hack and ust doesn't feel as elegant as mixins
+mixins. It is an unnecessary hack and just doesn't feel as elegant as mixins
 were. It was a quick fix, but `react-compat-component` is the real deal.
 
 ```javascript
