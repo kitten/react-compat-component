@@ -47,7 +47,7 @@ export class CompatComponent extends React.Component {
 
     // Importing propTypes from the getPropTypes method
     if (typeof this.getPropTypes === "function") {
-      const _getPropTypes = this._getPropTypes();
+      const _getPropTypes = this.getPropTypes();
       for (var key in _getPropTypes) {
         this.propTypes[key] = _getPropTypes[key];
       }
@@ -58,7 +58,7 @@ export class CompatComponent extends React.Component {
     }
 
     if (typeof this.getDefaultProps === "function") {
-      const _getDefaultProps = this._getDefaultProps();
+      const _getDefaultProps = this.getDefaultProps();
       for (var key in _getDefaultProps) {
         this.defaultProps[key] = _getDefaultProps[key];
       }
