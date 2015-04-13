@@ -182,8 +182,8 @@ export class CompatComponent extends React.Component {
             // Check whether methods here can be imported, as they're supposed
             // to only be defined once
             invariant(
-              this.hasOwnProperty(property),
-              "You are attempting to redefine '${property}' on your component. " +
+              !this.hasOwnProperty(property),
+              "You are attempting to redefine '"+property+"' on your component. " +
                 "This conflict may be due to a mixin."
             );
             this[property] = mixin[property];
