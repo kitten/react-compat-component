@@ -98,6 +98,7 @@ var CompatComponent = (function (_React$Component) {
 
     this._mixinImports = {};
     this._prePropsMixinFunctions();
+    this._processProps();
 
     // Reintroduce getInitialState() method
     var state = {};
@@ -133,6 +134,26 @@ var CompatComponent = (function (_React$Component) {
           _this[func] = _this[func].bind(_this);
         }
       });
+    }
+  }, {
+    key: "_processProps",
+
+    // Process props to comply to propTypes and defaultProps
+    value: function _processProps() {
+      for (var key in this.defaultProps) {
+        if (this.defaultProps.hasOwnProperty(key) && !this.props.hasOwnProperty(key)) {
+          this.props[key] = this.defaultProps[key];
+        }
+      }
+
+      for (var key in this.propTypes) {
+        if (this.propTypes.hasOwnProperty(key)) {
+          var res = this.propTypes[key](this.props, key, this.constructor.name || "");
+          if (res) {
+            console.warn("Warning: " + res.message);
+          }
+        }
+      }
     }
   }, {
     key: "_prePropsMixinFunctions",

@@ -66,6 +66,7 @@ export class CompatComponent extends React.Component {
 
     this._mixinImports = {};
     this._prePropsMixinFunctions();
+    this._processProps();
 
     // Reintroduce getInitialState() method
     let state = {};
@@ -94,6 +95,31 @@ export class CompatComponent extends React.Component {
         this[func] = this[func].bind(this);
       }
     });
+  }
+
+  // Process props to comply to propTypes and defaultProps
+  _processProps() {
+    for (let key in this.defaultProps) {
+      if (
+        this.defaultProps.hasOwnProperty(key) &&
+        !this.props.hasOwnProperty(key)
+      ) {
+        this.props[key] = this.defaultProps[key];
+      }
+    }
+
+    for (let key in this.propTypes) {
+      if (this.propTypes.hasOwnProperty(key)) {
+        const res = this.propTypes[key](
+          this.props,
+          key,
+          this.constructor.name || ""
+        );
+        if (res) {
+          console.warn("Warning: " + res.message);
+        }
+      }
+    }
   }
 
   // Import the mixins' properties
