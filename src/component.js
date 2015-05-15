@@ -65,8 +65,26 @@ export class CompatComponent extends React.Component {
     }
 
     this._mixinImports = {};
-    this._prePropsMixinFunctions();
+    // Overwrite the method to call all methods in the "holding" array
+    for (let key in multiFunctions) {
+      if (multiFunctions.hasOwnProperty(key)) {
+        const property = multiFunctions[key];
+        this._mixinImports[property] = [];
+        this[property] = (...arrs) => {
+          if (this._mixinImports[property] && this._mixinImports[property].length)
+          this._mixinImports[property].forEach(func => {
+            func(...arrs);
+          });
+        };
+      }
+    }
+
+    this._mixinImports["componentWillUpdate"].unshift(() => {
+      this._processProps();
+    });
+
     this._processProps();
+    this._prePropsMixinFunctions();
 
     // Reintroduce getInitialState() method
     let state = {};
@@ -167,13 +185,6 @@ export class CompatComponent extends React.Component {
                   this[property].bind(this)
                 );
               }
-
-              // Overwrite the method to call all methods in the "holding" array
-              this[property] = function() {
-                this._mixinImports[property].forEach(func => {
-                  func.call(this);
-                });
-              };
             }
 
             // Push the mixin's method into the "holding" array
