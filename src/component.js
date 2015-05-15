@@ -70,6 +70,15 @@ export class CompatComponent extends React.Component {
       if (multiFunctions.hasOwnProperty(key)) {
         const property = multiFunctions[key];
         this._mixinImports[property] = [];
+
+        // Save the existing method in the parent class to the
+        // "holding" array
+        if (typeof this[property] === "function") {
+          this._mixinImports[property].push(
+            this[property].bind(this)
+          );
+        }
+
         this[property] = (...arrs) => {
           if (this._mixinImports[property] && this._mixinImports[property].length)
           this._mixinImports[property].forEach(func => {
@@ -175,18 +184,6 @@ export class CompatComponent extends React.Component {
           typeof mixin[property] === "function"
         ) {
           if (multiFunctions[property]) {
-            if (!this._mixinImports.hasOwnProperty(property)) {
-              this._mixinImports[property] = [];
-
-              // Save the existing method in the parent class to the
-              // "holding" array
-              if (typeof this[property] === "function") {
-                this._mixinImports[property].push(
-                  this[property].bind(this)
-                );
-              }
-            }
-
             // Push the mixin's method into the "holding" array
             this._mixinImports[property].push(mixin[property].bind(this));
           } else {
