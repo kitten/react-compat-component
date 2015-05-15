@@ -1,6 +1,6 @@
 {
   "name": "react-compat-component",
-  "version": "1.3.0",
+  "version": "1.3.1",
   "description": "Compatibility class for React's ES6 component class",
   "main": "dist.js",
   "engines": {
